@@ -94,7 +94,7 @@ public class ServiceImpl implements Service{
             Class.forName(DBConnection.DRIVERCLASS);
             con = DriverManager.getConnection(DBConnection.DBURL, DBConnection.USER, DBConnection.PASSWORD);
             pstmt = con.prepareStatement("select users.* " +
-                    "from posts inner join users on users.id = posts.userId " +
+                    "from posts inner join users on users.id = posts.'userId' " +
                     "where posts.id = ?;");
             pstmt.setInt(1, postId);
             rs = pstmt.executeQuery();
@@ -131,7 +131,7 @@ public class ServiceImpl implements Service{
             Class.forName(DBConnection.DRIVERCLASS);
             con = DriverManager.getConnection(DBConnection.DBURL, DBConnection.USER, DBConnection.PASSWORD);
             pstmt = con.prepareStatement("select users.* " +
-                    "from comments inner join users on users.id = comments.userId " +
+                    "from comments inner join users on users.id = comments.'userId' " +
                     "where comments.id = ?;");
             pstmt.setInt(1, commentId);
             rs = pstmt.executeQuery();
@@ -201,7 +201,7 @@ public class ServiceImpl implements Service{
         try {
             Class.forName(DBConnection.DRIVERCLASS);
             con = DriverManager.getConnection(DBConnection.DBURL, DBConnection.USER, DBConnection.PASSWORD);
-            pstmt = con.prepareStatement("select * from posts where userId = ?;");
+            pstmt = con.prepareStatement("select * from posts where 'userId' = ?;");
             pstmt.setInt(1, userId);
             state = pstmt.execute();
             if (state) {
@@ -260,7 +260,7 @@ public class ServiceImpl implements Service{
         try {
             Class.forName(DBConnection.DRIVERCLASS);
             con = DriverManager.getConnection(DBConnection.DBURL, DBConnection.USER, DBConnection.PASSWORD);
-            pstmt = con.prepareStatement("update comments set userId = ?, postId = ?, " +
+            pstmt = con.prepareStatement("update comments set 'userId' = ?, 'postId' = ?, " +
                     "content = ? where id = ?;");
             pstmt.setInt(1, comments.getUserId());
             pstmt.setInt(2, comments.getPostId());
@@ -318,7 +318,7 @@ public class ServiceImpl implements Service{
         try {
             Class.forName(DBConnection.DRIVERCLASS);
             con = DriverManager.getConnection(DBConnection.DBURL, DBConnection.USER, DBConnection.PASSWORD);
-            pstmt = con.prepareStatement("select * from comments where postId = ?;");
+            pstmt = con.prepareStatement("select * from comments where 'postId' = ?;");
             pstmt.setInt(1, postId);
             state = pstmt.execute();
             if (state) {
